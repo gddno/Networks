@@ -1,0 +1,197 @@
+Current configuration : 4996 bytes
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname Switch
+!
+boot-start-marker
+boot-end-marker
+!
+!
+username admin
+no aaa new-model
+switch 2 provision ws-c3750g-24ts
+system mtu routing 1500
+ip subnet-zero
+!
+!
+ip dhcp snooping
+!
+!
+crypto pki trustpoint TP-self-signed-412461056
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-412461056
+ revocation-check none
+ rsakeypair TP-self-signed-412461056
+!
+!
+crypto pki certificate chain TP-self-signed-412461056
+ certificate self-signed 01
+  3082023D 308201A6 A0030201 02020101 300D0609 2A864886 F70D0101 04050030
+  30312E30 2C060355 04031325 494F532D 53656C66 2D536967 6E65642D 43657274
+  69666963 6174652D 34313234 36313035 36301E17 0D393330 33303130 30303133
+  315A170D 32303031 30313030 30303030 5A303031 2E302C06 03550403 1325494F
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3431 32343631
+  30353630 819F300D 06092A86 4886F70D 01010105 0003818D 00308189 02818100
+  CB4FD858 4C985FF8 86F324C4 55269702 F8CE0D47 749A45DE E681CC00 9C4BAFF4
+  ADB3AECA D6128C70 77299370 EBF74B52 C340C50F 24B1383B 9F8F81E5 9A304A65
+  8F496EA2 62C601A0 F2B1782E B8FC0102 6172E671 79E06E19 7F7F6FAA EC7A68E8
+  A14EDD15 A79429A5 6EF4C05E C83BC3C9 E3C75D07 27C6F487 9C6F4B0B 386E5E19
+  02030100 01A36730 65300F06 03551D13 0101FF04 05300301 01FF3012 0603551D
+  11040B30 09820753 77697463 682E301F 0603551D 23041830 1680146F 67C24AD7
+  EDF561F0 9886CE46 876EDA72 D30C7130 1D060355 1D0E0416 04146F67 C24AD7ED
+  F561F098 86CE4687 6EDA72D3 0C71300D 06092A86 4886F70D 01010405 00038181
+  0020BB48 DB506F3F 6649440E D7F9628A 8F2B7F07 F924CEC1 B306DFEE 29F0BEB1
+  65AF1989 02F57427 5928EBE4 4FFE193F 890D737F DA4D6252 DC903D50 E3E2468D
+  4BF2AE19 A4CA99E1 E2FF5587 DF1B4D1C 57835079 DC580304 5CC947FF 0C976FE4
+  034DE2DB AD3BFD68 7CFC8246 61760998 9D371C04 87A32CED 7C6F2376 6F266EBC CF
+  quit
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+vlan internal allocation policy ascending
+!
+!
+!
+!
+interface GigabitEthernet2/0/1
+!
+interface GigabitEthernet2/0/2
+!
+interface GigabitEthernet2/0/3
+ description --< srv-vm01 eth0 (br100) >--
+ switchport trunk allowed vlan 1,40,50,100
+ ip dhcp snooping trust
+!
+interface GigabitEthernet2/0/4
+ description --< srv-vm01 eth1 (br1) >--
+ switchport access vlan 20
+ switchport trunk native vlan 20
+ switchport mode access
+!
+interface GigabitEthernet2/0/5
+!
+interface GigabitEthernet2/0/6
+!
+interface GigabitEthernet2/0/7
+!
+interface GigabitEthernet2/0/8
+!
+interface GigabitEthernet2/0/9
+ description --< sw-211 >--
+ switchport trunk allowed vlan 1,10,100
+ switchport mode access
+!
+interface GigabitEthernet2/0/10
+!
+interface GigabitEthernet2/0/11
+ description --< sw-305 >--
+ switchport trunk allowed vlan 1,10,100,103
+!
+interface GigabitEthernet2/0/12
+ description --<auditoriya 106 >--
+ switchport access vlan 103
+ switchport trunk native vlan 103
+ switchport mode access
+!
+interface GigabitEthernet2/0/13
+ description --< mkrushevickih (301) >--
+ switchport trunk native vlan 102
+ switchport trunk allowed vlan 100,102
+ switchport mode access
+!
+interface GigabitEthernet2/0/14
+ description --< sw-207 >--
+ switchport access vlan 100
+ switchport trunk native vlan 100
+ switchport mode access
+!
+interface GigabitEthernet2/0/15
+ description --< ap_mikrotik_104 >--
+ switchport trunk allowed vlan 1,10,100
+!
+interface GigabitEthernet2/0/16
+ description --<third floor >--
+ switchport access vlan 100
+ switchport trunk native vlan 100
+ switchport mode access
+!
+interface GigabitEthernet2/0/17
+ description --< sw-201 >--
+ switchport trunk allowed vlan 1,10,100,101
+!
+interface GigabitEthernet2/0/18
+ description --< unifi-204 >--
+ switchport trunk native vlan 100
+ switchport trunk allowed vlan 100,102,103
+!
+interface GigabitEthernet2/0/19
+ description --< srv-calc02 >--
+ switchport access vlan 100
+ switchport trunk native vlan 100
+ switchport mode access
+!
+interface GigabitEthernet2/0/20
+ description --< hyperv-02 >--
+ switchport access vlan 100
+ switchport mode access
+!
+interface GigabitEthernet2/0/21
+ description --< sw-205 >--
+ switchport trunk allowed vlan 1,10,40,50,100
+!
+interface GigabitEthernet2/0/22
+ description --< r-204 int >--
+ switchport trunk allowed vlan 1,10,40,50,100-103
+!
+interface GigabitEthernet2/0/23
+ description --< r-204 ext >--
+ switchport trunk allowed vlan 1,20
+!
+interface GigabitEthernet2/0/24
+ description --< InterZet >--
+ switchport access vlan 20
+ switchport mode access
+!
+interface GigabitEthernet2/0/25
+!
+interface GigabitEthernet2/0/26
+!
+interface GigabitEthernet2/0/27
+!
+interface GigabitEthernet2/0/28
+ description --< sw-212 >--
+ switchport trunk allowed vlan 1,10,100,103
+!
+interface Vlan1
+ no ip address
+!
+interface Vlan10
+ ip address 192.168.0.204 255.255.255.0
+!
+ip default-gateway 192.168.0.1
+ip classless
+ip http server
+ip http secure-server
+!
+!
+!
+control-plane
+!
+!
+line con 0
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+end
